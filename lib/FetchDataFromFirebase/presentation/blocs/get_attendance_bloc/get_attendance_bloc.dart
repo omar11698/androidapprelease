@@ -3,15 +3,27 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/use_cases/get_attendance_usecase.dart';
+
 part 'get_attendance_event.dart';
 part 'get_attendance_state.dart';
 
 class GetAttendanceBloc extends Bloc<GetAttendanceEvent, GetAttendanceState> {
-  GetAttendanceBloc() : super(GetAttendanceInitial()) {
+  final GetAttendanceUseCase getAttendanceUseCase;
+  GetAttendanceBloc({required this.getAttendanceUseCase}) : super(GetAttendanceInitial()) {
     on<GetAttendanceEvent>((event, emit) => handleGetAttendanceEvent(event,emit));
   }
 
-  handleGetAttendanceEvent(GetAttendanceEvent event, Emitter<GetAttendanceState> emit) {
+  handleGetAttendanceEvent(GetAttendanceEvent event, Emitter<GetAttendanceState> emit)async {
+    emit(GetAttendanceLoadingState());
+    try{
+      await getAttendanceUseCase.call();
+      emit(GetAttendanceSuccess());
+    }
+   catch(e){
+      print(e);
+      emit(GetAttendanceFailed());
+   }
 
   }
 }

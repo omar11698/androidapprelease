@@ -1,4 +1,6 @@
 import 'package:androidapprelease/FetchDataFromFirebase/domain/use_cases/get_users_usecase.dart';
+import 'package:androidapprelease/FetchDataFromFirebase/presentation/blocs/get_attendance_bloc/get_attendance_bloc.dart';
+import 'package:androidapprelease/FetchDataFromFirebase/presentation/blocs/get_users_bloc/get_users_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../FetchDataFromFirebase/data/data_sources/remote_data_source/firebase.dart';
@@ -21,8 +23,8 @@ initGetAttendanceModule() {
   if (!GetIt.I.isRegistered<GetAttendanceUseCase>()) {
     instance
         .registerFactory<GetAttendanceUseCase>(() => GetAttendanceUseCase(repository: instance()));
-    // instance
-    //     .registerFactory<SignupScreenBloc>(() => SignupScreenBloc(instance()));
+    instance
+        .registerFactory<GetAttendanceBloc>(() => GetAttendanceBloc(getAttendanceUseCase:instance()));
   }
 }
 
@@ -30,8 +32,8 @@ initGetUsersModule() {
   if (!GetIt.I.isRegistered<GetUsersUseCase>()) {
     instance
         .registerFactory<GetUsersUseCase>(() => GetUsersUseCase(repository: instance()));
-    // instance
-    //     .registerFactory<LoginScreenBloc>(() => LoginScreenBloc(loginWithEmailUseCase:instance(), loginWithGoogleUseCase: instance(), loginWithFaceBookUseCase: instance()));
+    instance
+        .registerFactory<GetUsersBloc>(() => GetUsersBloc(getUssersUseCase:instance(),));
 
   }
 }

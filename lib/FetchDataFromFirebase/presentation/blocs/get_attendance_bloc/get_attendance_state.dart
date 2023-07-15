@@ -13,4 +13,7 @@ class GetAttendanceInitial extends GetAttendanceState {
 }class GetAttendanceFailed extends GetAttendanceState {
   @override
   List<Object> get props => [];
+}class GetAttendanceLoadingState extends GetAttendanceState {
+  @override
+  List<Object> get props => [];
 }

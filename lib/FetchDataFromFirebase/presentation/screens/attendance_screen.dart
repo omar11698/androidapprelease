@@ -7,14 +7,18 @@ class AttendanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body:ListView.builder(itemCount:listOfDates.length,itemBuilder: (BuildContext context, index){
-        return ListTile(
-            onTap: ()=>Navigator.pushNamed(context, allDataScreenRoute),
-            leading:Card(
-              child: Text(listOfDates[index].toString()),
-            ) ,
-        );
-      }),
+      body:buildListView(),
     );
+  }
+
+  ListView buildListView() {
+    return ListView.builder(itemCount:listOfDates.length,itemBuilder: (BuildContext context, index){
+      return ListTile(
+          onTap: ()=>Navigator.pushNamed(context, allDataScreenRoute),
+          leading:Card(
+            child: Text(listOfDates[index].toString()),
+          ) ,
+      );
+    });
   }
 }
