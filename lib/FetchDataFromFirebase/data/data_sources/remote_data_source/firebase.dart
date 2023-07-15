@@ -1,17 +1,20 @@
 import 'package:androidapprelease/FetchDataFromFirebase/data/models/users.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../../models/attendance_model.dart';
 
 abstract class GetDataFromFireBase{
-  Future<AttendanceModel> getAttendanceFromFirebase();
+  Future<DatabaseReference> getAttendanceFromFirebase();
   Future<UserModel> getUsersFromFirebase();
 }
 class GetDataFromFireBaseImpl extends GetDataFromFireBase{
 
   @override
-  Future<AttendanceModel> getAttendanceFromFirebase() {
-    // TODO: implement getAttendanceFromFirebase
-    throw UnimplementedError();
+  Future<DatabaseReference> getAttendanceFromFirebase() async{
+    FirebaseDatabase database = FirebaseDatabase.instance;
+    DatabaseReference ref = FirebaseDatabase.instance.ref("Branch1/Attendence");
+    DatabaseEvent event = await ref.once();
+    return  ref;
   }
 
   @override

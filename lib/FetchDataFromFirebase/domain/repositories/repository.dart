@@ -1,10 +1,11 @@
 import 'package:androidapprelease/FetchDataFromFirebase/domain/entities/user_entity.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../entities/attendance_entity.dart';
 
 abstract class Repository{
 
-  Future<List<Attendance>> getAttendance ();
+  Future<DatabaseReference> getAttendance ();
   Future<List<User>> getUsers ();
 }
 
