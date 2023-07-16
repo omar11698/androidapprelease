@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import '../entities/attendance_entity.dart';
 
 abstract class Repository{
-
   Future<DatabaseReference> getAttendance ();
   Future<DatabaseReference> getUsers ();
 }

@@ -38,6 +38,7 @@ class NavigationRouter{
       case allDataScreenRoute:
         return MaterialPageRoute(builder: (_) => const AllDataScreen());
       case branchesGridViewRoute:
+        initGetUsersModule();
         return MaterialPageRoute(builder: (_) => const BranchesGridScreen());
 
       default:
