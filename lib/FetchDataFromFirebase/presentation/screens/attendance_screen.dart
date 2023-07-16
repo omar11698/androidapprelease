@@ -14,18 +14,23 @@ class AttendanceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
+
         Expanded(child: BlocBuilder<GetAttendanceBloc, GetAttendanceState>(
           builder: (context, state) {
             if(state is GetAttendanceSuccess){
               return FirebaseAnimatedList(query:state.databaseReference , itemBuilder: (context,snapshot,animation,index){
 
                 return ListTile(
-                  leading: Text(state.databaseReference.child("26-12-2023").child("08:45").onValue.toString()),
+                  // leading: Text(state.databaseReference.child("26-12-2023").child("08:45").onValue.toString()),
+                  leading: Card(elevation:4,child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(snapshot.value.toString()),
+                  )),
                 );
               });
             }
             else if (state is GetAttendanceLoadingState){
-              return CircularProgressIndicator();
+              return Align(alignment:Alignment.center,child: Container(height:100,width:200,child: const CircularProgressIndicator()));
             }
             else{
               return Center(child: Text("failed"),);

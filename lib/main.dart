@@ -1,3 +1,4 @@
+import 'package:androidapprelease/FetchDataFromFirebase/presentation/blocs/get_users_bloc/get_users_bloc.dart';
 import 'package:androidapprelease/core/config/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetAttendanceBloc(getAttendanceUseCase: instance())..add(const GettingAttendanceEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+        create: (context) => GetAttendanceBloc(getAttendanceUseCase: instance())..add(const GettingAttendanceEvent())),
+        BlocProvider(
+        create: (context) => GetUsersBloc(getUssersUseCase: instance())..add(const GettingUsersEvent())),
+
+
+
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.buildThemeData,
         onGenerateRoute: NavigationRouter.generateRoute,
-        home: const Home(),
+        initialRoute: branchesGridViewRoute,
       ),
     );
   }

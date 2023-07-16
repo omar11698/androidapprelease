@@ -1,0 +1,1 @@
+const String kStrImages='assets/images/images.jpeg';
