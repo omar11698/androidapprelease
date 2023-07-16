@@ -13,9 +13,8 @@ class RepositoryImpl extends Repository{
   }
 
   @override
-  Future<List<User>> getUsers() {
-    // TODO: implement getUsers
-    throw UnimplementedError();
+  Future<DatabaseReference> getUsers() async{
+  return await getDataFromFireBase.getUsersFromFirebase();    throw UnimplementedError();
   }
 
 }
