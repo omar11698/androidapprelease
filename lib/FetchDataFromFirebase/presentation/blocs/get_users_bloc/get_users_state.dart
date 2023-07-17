@@ -10,10 +10,10 @@ class GetUsersInitial extends GetUsersState {
 }
 class GetUsersSuccess extends GetUsersState {
   final DatabaseReference getDataReference;
-
-  const GetUsersSuccess({required this.getDataReference});
+  final List<Branch> listOfBranch;
+  const GetUsersSuccess( {required this.getDataReference,required this.listOfBranch,});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [getDataReference,listOfBranch];
 }
 class GetUsersFailed extends GetUsersState {
   @override

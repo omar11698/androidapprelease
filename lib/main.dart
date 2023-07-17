@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'FetchDataFromFirebase/presentation/blocs/get_attendance_bloc/get_attendance_bloc.dart';
 import 'FetchDataFromFirebase/presentation/screens/home.dart';
+import 'core/config/bloc_observer.dart';
 import 'core/config/dependency_injection.dart';
 import 'core/config/theme.dart';
 
@@ -13,6 +14,7 @@ import 'core/config/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Bloc.observer = MyGlobalObserver();
   runApp(const MyApp());
 }
 
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
         create: (context) => GetAttendanceBloc(getAttendanceUseCase: instance())..add(const GettingAttendanceEvent())),
         BlocProvider(
-        create: (context) => GetUsersBloc(getUssersUseCase: instance())..add(const GettingUsersEvent())),
+        create: (context) => GetUsersBloc(getUsersUseCase: instance())..add(const GettingUsersEvent())),
 
 
 

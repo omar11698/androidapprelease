@@ -33,7 +33,7 @@ initGetUsersModule() {
     instance
         .registerFactory<GetUsersUseCase>(() => GetUsersUseCase(repository: instance()));
     instance
-        .registerFactory<GetUsersBloc>(() => GetUsersBloc(getUssersUseCase:instance(),));
+        .registerFactory<GetUsersBloc>(() => GetUsersBloc(getUsersUseCase:instance(),));
 
   }
 }

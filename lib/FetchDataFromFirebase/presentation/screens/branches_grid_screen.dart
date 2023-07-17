@@ -6,36 +6,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/branch_entity.dart';
 
+
 class BranchesGridScreen extends StatelessWidget {
 
   const BranchesGridScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    final List<Branch> items = [];
+
     return Scaffold(
 
       body: BlocBuilder<GetUsersBloc, GetUsersState>(
         builder: (context, state) {
 
           if(state is GetUsersSuccess){
-            var branchName="";
-            var query=state.getDataReference.parent?.parent;
-            query?.onValue.listen((event) {
-              print(event.snapshot.value.toString());
-              // branchName=event.snapshot.value.toString();
-            });
-            var branchLogo="";
-            items.add(Branch(name: "query", logo: kStrImages));
-            return _buildBody(context, items);
+            print("zzzzzzzzzzzzzzzzz${state.listOfBranch}");
+            return _buildBody(context,state.listOfBranch);
 
           }
           else if (state is GetUsersLoading){
             return const Align(alignment:Alignment.center,child: SizedBox(height:100,width:100,child: CircularProgressIndicator()));
           }
           else {
-            return const Text("Failed");
+            return const Center(child: Text("Failed"));
           }
 
 

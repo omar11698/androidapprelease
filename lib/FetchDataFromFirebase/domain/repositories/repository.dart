@@ -6,5 +6,6 @@ import '../entities/attendance_entity.dart';
 abstract class Repository{
   Future<DatabaseReference> getAttendance ();
   Future<DatabaseReference> getUsers ();
+  // Future<dynamic> readDataFromDataBase ();
 }
 
