@@ -13,32 +13,57 @@ class AttendanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-
-        Expanded(child: BlocBuilder<GetAttendanceBloc, GetAttendanceState>(
-          builder: (context, state) {
-            if(state is GetAttendanceSuccess){
-              return FirebaseAnimatedList(query:state.databaseReference , itemBuilder: (context,snapshot,animation,index){
-
-                return ListTile(
-                  // leading: Text(state.databaseReference.child("26-12-2023").child("08:45").onValue.toString()),
-                  leading: Card(elevation:4,child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(snapshot.value.toString()),
-                  )),
-                );
-              });
-            }
-            else if (state is GetAttendanceLoadingState){
-              return Align(alignment:Alignment.center,child: Container(height:100,width:200,child: const CircularProgressIndicator()));
-            }
-            else{
-              return Center(child: Text("failed"),);
-            }
-          },
-        ))
-      ],),
+      body: buildColumn(),
     );
+  }
+
+  Column buildColumn() {
+    return Column(children: [
+
+      Expanded(child: BlocBuilder<GetAttendanceBloc, GetAttendanceState>(
+        builder: (context, state) {
+          if(state is GetAttendanceSuccess){
+            return FirebaseAnimatedList(query:state.databaseReference , itemBuilder: (context,snapshot,animation,index){
+                print(snapshot.value.toString());
+                Map<dynamic,dynamic> attendanceCheckedInDate=snapshot.child("${index+1}").value as Map;
+                print(attendanceCheckedInDate);
+                var attendanceCheckedOutDate=snapshot.child("${index+1}").value.toString();
+
+                // leading: Text(state.databaseReference.child("26-12-2023").child("08:45").onValue.toString()),
+                 return Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Card(elevation:4,child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      const Row(
+                        children: [
+                          Text("Name: "),
+                          SizedBox(width: 100,),
+                          Text("Status"),
+                        ],
+                      ),
+                      const Text("Gender"),
+                      Text("Checked In:  $attendanceCheckedInDate"),
+                      Text("Checked Out: $attendanceCheckedOutDate"),
+
+                    ],),
+                    // child: Text(snapshot.value.toString()),
+                )),
+                 );
+
+            });
+          }
+          else if (state is GetAttendanceLoadingState){
+            return const Align(alignment:Alignment.center,child: SizedBox(height:100,width:200,child: CircularProgressIndicator()));
+          }
+          else{
+            return const Center(child: Text("failed"),);
+          }
+        },
+      ))
+    ],);
   }
 
   ListView buildListView() {
