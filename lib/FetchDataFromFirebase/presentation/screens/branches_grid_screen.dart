@@ -20,14 +20,16 @@ class BranchesGridScreen extends StatelessWidget {
         builder: (context, state) {
 
           if(state is GetUsersSuccess){
-            print("zzzzzzzzzzzzzzzzz${state.listOfBranch}");
+
             return _buildBody(context,state.listOfBranch);
 
           }
           else if (state is GetUsersLoading){
+
             return const Align(alignment:Alignment.center,child: SizedBox(height:100,width:100,child: CircularProgressIndicator()));
           }
           else {
+
             return const Center(child: Text("Failed"));
           }
 

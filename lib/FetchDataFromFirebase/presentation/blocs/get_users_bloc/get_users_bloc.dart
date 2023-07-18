@@ -14,7 +14,15 @@ part 'get_users_state.dart';
 class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersState> {
   final GetUsersUseCase getUsersUseCase;
   GetUsersBloc({required this.getUsersUseCase}) : super(GetUsersInitial()) {
+
+
+
+
     on<GetUsersEvent>((event, emit)=>handleGetUsersEvent(emit,event));
+
+
+
+
   }
 
   handleGetUsersEvent(Emitter<GetUsersState> emit, GetUsersEvent event) async{
@@ -27,14 +35,12 @@ class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersState> {
 
         if (event.snapshot.value != null) {
           Map<dynamic,dynamic>? data = event.snapshot.value as Map?;
-          print(data);
           List?branchesNames=data?.keys.toList();
            for(int i =0; i<branchesNames!.length;i++){
             listOfBranches.add(Branch(name: branchesNames[i].toString(), logo: kStrImages));
           }
           listOfBranchObject=listOfBranches;
-          print(branchesNames);
-          print(listOfBranches);
+
         } else {
 
           print('No data found');
