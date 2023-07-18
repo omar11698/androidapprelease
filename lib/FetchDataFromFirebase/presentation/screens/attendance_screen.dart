@@ -24,10 +24,16 @@ class AttendanceScreen extends StatelessWidget {
         builder: (context, state) {
           if(state is GetAttendanceSuccess){
             return FirebaseAnimatedList(query:state.databaseReference , itemBuilder: (context,snapshot,animation,index){
-                print(snapshot.value.toString());
+                // print(snapshot.value.toString());
                 Map<dynamic,dynamic> attendanceCheckedInDate=snapshot.child("${index+1}").value as Map;
+                Map<dynamic,dynamic> attendanceCheckedOutDate=snapshot.child("${index+1}").value as Map;
+
+
+                List listOfCheckedInDates=attendanceCheckedInDate.keys.toList() ;
+                print(attendanceCheckedInDate.keys);
+                // var  attendanceCheckedInDate=snapshot.child("${index+1}").value.toString();
                 print(attendanceCheckedInDate);
-                var attendanceCheckedOutDate=snapshot.child("${index+1}").value.toString();
+                List listOfCheckedOutDates=attendanceCheckedOutDate.keys.toList() ;
 
                 // leading: Text(state.databaseReference.child("26-12-2023").child("08:45").onValue.toString()),
                  return Padding(
@@ -45,8 +51,8 @@ class AttendanceScreen extends StatelessWidget {
                         ],
                       ),
                       const Text("Gender"),
-                      Text("Checked In:  $attendanceCheckedInDate"),
-                      Text("Checked Out: $attendanceCheckedOutDate"),
+                      Text("Checked In:  ${listOfCheckedInDates[1]}"),
+                      Text("Checked Out: ${listOfCheckedOutDates[0]!="null"?listOfCheckedOutDates[0]:"nothing to show"}"),
 
                     ],),
                     // child: Text(snapshot.value.toString()),
