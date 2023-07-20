@@ -30,9 +30,9 @@ class AttendanceScreen extends StatelessWidget {
             return FirebaseAnimatedList(query:state.databaseReference , itemBuilder: (context,snapshot,animation,index){
               List<String> listOfStatus=[];
               List<String> listOfKeys=[];
-              for (var e in snapshot.children) {
-                print(e.value.runtimeType);
-                for (var element in e.children) {
+              for (var element in snapshot.children) {
+                print(element.value.toString());
+                for (var element in element.children) {
                   print(element.value.toString());
                   String status=element.child("Status").value.toString();
                   String key=element.key.toString();
@@ -73,8 +73,8 @@ class AttendanceScreen extends StatelessWidget {
                         ],
                       ),
                       const Text("Gender"),
-                      Text("${listOfStatus[0]}: ${listOfKeys[0]}"),
-                      Text("${listOfStatus[1]}: ${listOfKeys[1]}"),
+                      Text("${listOfStatus[0]!="null"?listOfStatus[0]:"nothing to show"}: ${listOfKeys[0]!="null"?listOfKeys[0]:"nothing to show"}"),
+                      Text("${listOfStatus.length<=1?"nothing to show":listOfStatus[1]}: ${listOfStatus.length<=1?"nothing to show":listOfKeys[1]}"),
 
                       // Text("${snapshot.child('Status').value.toString()}"),
                       // Text("${listOfStatus[index]}: ${listOfKeys[index]}"),
