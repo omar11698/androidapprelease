@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:androidapprelease/core/config/router.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/attendance_model.dart';
 import '../blocs/get_attendance_bloc/get_attendance_bloc.dart';
 
 List<DateTime> listOfDates = [DateTime.now(), DateTime.now()];
@@ -19,21 +23,39 @@ class AttendanceScreen extends StatelessWidget {
 
   Column buildColumn() {
     return Column(children: [
-
+      const SizedBox(height: 40,),
       Expanded(child: BlocBuilder<GetAttendanceBloc, GetAttendanceState>(
         builder: (context, state) {
           if(state is GetAttendanceSuccess){
             return FirebaseAnimatedList(query:state.databaseReference , itemBuilder: (context,snapshot,animation,index){
-                // print(snapshot.value.toString());
-                Map<dynamic,dynamic> attendanceCheckedInDate=snapshot.child("${index+1}").value as Map;
-                Map<dynamic,dynamic> attendanceCheckedOutDate=snapshot.child("${index+1}").value as Map;
-
-
-                List listOfCheckedInDates=attendanceCheckedInDate.keys.toList() ;
-                print(attendanceCheckedInDate.keys);
-                // var  attendanceCheckedInDate=snapshot.child("${index+1}").value.toString();
-                print(attendanceCheckedInDate);
-                List listOfCheckedOutDates=attendanceCheckedOutDate.keys.toList() ;
+              List<String> listOfStatus=[];
+              List<String> listOfKeys=[];
+              for (var e in snapshot.children) {
+                print(e.value.runtimeType);
+                for (var element in e.children) {
+                  print(element.value.toString());
+                  String status=element.child("Status").value.toString();
+                  String key=element.key.toString();
+                  listOfStatus.add(status);
+                  listOfKeys.add(key);
+                  // print(" this is the list of keys:$listOfKeys");
+                  // print(" this is the list of status:$listOfStatus");
+                }
+              }
+                // final value = Map<String, dynamic>.from(snapshot.value! as Map<Object?, Object?>);
+              // DateStatus dateStatus = parseJsonToModel(json);
+              // print(dateStatus.times);
+              // final booking = Booking.fromJson(json);
+              // print(booking);
+                // Map<dynamic,dynamic> attendanceCheckedInDate=snapshot.child("${index+1}").value as Map;
+                // Map<dynamic,dynamic> attendanceCheckedOutDate=snapshot.child("${index+1}").value as Map;
+                //
+                //
+                // List listOfCheckedInDates=attendanceCheckedInDate.keys.toList();
+                // // print(attendanceCheckedInDate.keys);
+                // // var  attendanceCheckedInDate=snapshot.child("${index+1}").value.toString();
+                // // print(attendanceCheckedInDate);
+                // List listOfCheckedOutDates=attendanceCheckedOutDate.keys.toList() ;
 
                 // leading: Text(state.databaseReference.child("26-12-2023").child("08:45").onValue.toString()),
                  return Padding(
@@ -51,8 +73,14 @@ class AttendanceScreen extends StatelessWidget {
                         ],
                       ),
                       const Text("Gender"),
-                      Text("Checked In:  ${listOfCheckedInDates[1]}"),
-                      Text("Checked Out: ${listOfCheckedOutDates[0]!="null"?listOfCheckedOutDates[0]:"nothing to show"}"),
+                      Text("${listOfStatus[0]}: ${listOfKeys[0]}"),
+                      Text("${listOfStatus[1]}: ${listOfKeys[1]}"),
+
+                      // Text("${snapshot.child('Status').value.toString()}"),
+                      // Text("${listOfStatus[index]}: ${listOfKeys[index]}"),
+                      //
+                      // Text("Checked In:  ${listOfCheckedInDates[1]}"),
+                      // Text("Checked Out: ${listOfCheckedOutDates[0]!="null"?listOfCheckedOutDates[0]:"nothing to show"}"),
 
                     ],),
                     // child: Text(snapshot.value.toString()),

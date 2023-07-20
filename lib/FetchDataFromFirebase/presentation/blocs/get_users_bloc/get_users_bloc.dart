@@ -28,11 +28,12 @@ class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersState> {
   handleGetUsersEvent(Emitter<GetUsersState> emit, GetUsersEvent event) async{
     emit(GetUsersLoading());
     late List<Branch> listOfBranchObject;
+
     try{
       var result=await getUsersUseCase.call();
       List<Branch>listOfBranches=[];
-      await result.parent?.parent?.once().then((event) {
 
+      await result.parent?.parent?.once().then((event){
         if (event.snapshot.value != null) {
           Map<dynamic,dynamic>? data = event.snapshot.value as Map?;
           List?branchesNames=data?.keys.toList();
@@ -42,13 +43,11 @@ class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersState> {
           listOfBranchObject=listOfBranches;
 
         } else {
-
           print('No data found');
         }
         return null;
       });
       emit(GetUsersSuccess(getDataReference:  result, listOfBranch: listOfBranchObject,));
-
     }
 
     catch(e){
@@ -56,5 +55,8 @@ class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersState> {
       emit(GetUsersFailed());
     }
   }
+
+
+
 }
 
