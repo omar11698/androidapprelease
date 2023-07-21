@@ -31,6 +31,7 @@ class NavigationRouter{
         initGetUsersModule();
         return MaterialPageRoute(builder: (_) => const UsersScreen());
       case attendanceScreenRoute:
+        initGetUsersModule();
         initGetAttendanceModule();
         return MaterialPageRoute(builder: (_) => const AttendanceScreen());
       case allDataScreenRoute:

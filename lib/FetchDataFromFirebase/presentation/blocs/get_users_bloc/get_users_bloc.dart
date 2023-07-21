@@ -16,8 +16,6 @@ class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersState> {
   GetUsersBloc({required this.getUsersUseCase}) : super(GetUsersInitial()) {
 
 
-
-
     on<GetUsersEvent>((event, emit)=>handleGetUsersEvent(emit,event));
 
 

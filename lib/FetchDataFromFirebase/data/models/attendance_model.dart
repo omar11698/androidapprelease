@@ -16,7 +16,8 @@ class AttendanceModel extends Attendance {
 
 class AttendanceTime {
   final String time;
-  final AttendanceStatus attendanceStatus;
+  // final AttendanceStatus attendanceStatus;
+  final String attendanceStatus;
   AttendanceTime({required this.time, required this.attendanceStatus});
 }
 
